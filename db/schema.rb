@@ -10,32 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_24_141837) do
+ActiveRecord::Schema.define(version: 2019_10_24_190354) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "doctor_id"
     t.integer "patient_id"
     t.integer "city_id"
-    t.integer "specialty_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_appointments_on_city_id"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
-    t.index ["specialty_id"], name: "index_appointments_on_specialty_id"
   end
 
   create_table "cities", force: :cascade do |t|
     t.string "city"
-    t.integer "doctor_id"
-    t.integer "patient_id"
-    t.integer "appointment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["appointment_id"], name: "index_cities_on_appointment_id"
-    t.index ["doctor_id"], name: "index_cities_on_doctor_id"
-    t.index ["patient_id"], name: "index_cities_on_patient_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -43,11 +35,18 @@ ActiveRecord::Schema.define(version: 2019_10_24_141837) do
     t.string "last_name"
     t.string "zip_code"
     t.integer "city_id"
-    t.integer "specialty_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_doctors_on_city_id"
-    t.index ["specialty_id"], name: "index_doctors_on_specialty_id"
+  end
+
+  create_table "dr_specialties", force: :cascade do |t|
+    t.integer "doctor_id"
+    t.integer "specialty_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_dr_specialties_on_doctor_id"
+    t.index ["specialty_id"], name: "index_dr_specialties_on_specialty_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -61,10 +60,8 @@ ActiveRecord::Schema.define(version: 2019_10_24_141837) do
 
   create_table "specialties", force: :cascade do |t|
     t.string "name"
-    t.integer "specialty_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["specialty_id"], name: "index_specialties_on_specialty_id"
   end
 
 end
